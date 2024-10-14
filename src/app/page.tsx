@@ -1,6 +1,14 @@
 import { MockPosts } from "@/components/mock-posts";
-import { TelegramMain } from "@/components/telegram-main";
+import dynamic from "next/dynamic";
 import { Suspense } from "react";
+
+const TelegramMain = dynamic(
+	() => import("@/components/telegram-main").then((mod) => mod.TelegramMain),
+	{
+		loading: () => <div>Loading TelegramMain...</div>,
+		ssr: false,
+	}
+);
 
 export default function Home() {
 	return (
