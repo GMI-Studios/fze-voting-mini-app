@@ -1,5 +1,7 @@
+import { getUserViaWindow } from "./get-user-via-window";
+
 export const useTelegramUser = () => {
-	const user = window.Telegram?.WebApp?.initDataUnsafe?.user;
+	const user = getUserViaWindow();
 
 	return { user };
 };
