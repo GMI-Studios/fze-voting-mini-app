@@ -1,6 +1,7 @@
 import Script from "next/script";
 import "./globals.css";
 import { Inter } from "next/font/google";
+import { Toaster } from "@/components/ui/toaster";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,7 +18,10 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<Script src="https://telegram.org/js/telegram-web-app.js" />
-			<body className={inter.className}>{children}</body>
+			<body className={inter.className}>
+				<main>{children}</main>
+				<Toaster />
+			</body>
 		</html>
 	);
 }
