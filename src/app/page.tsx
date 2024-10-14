@@ -1,4 +1,3 @@
-import { AppMain } from "@/components/app-main";
 import { MockPosts } from "@/components/mock-posts";
 import { TelegramMain } from "@/components/telegram-main";
 import { Suspense } from "react";
