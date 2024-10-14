@@ -1,6 +1,6 @@
 // more info here https://core.telegram.org/bots/webapps#initializing-mini-apps
 interface Window {
-	Telegram?: {
+	Telegram: {
 		WebApp: {
 			initData: string;
 			initDataUnsafe: WebAppInitData;
