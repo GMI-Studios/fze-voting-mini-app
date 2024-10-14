@@ -1,14 +1,15 @@
-"use client";
-
-import dynamic from "next/dynamic";
-
-const TelegramMain = dynamic(
-	() => import("@/components/telegram-main").then((mod) => mod.TelegramMain),
-	{
-		ssr: false,
-	}
-);
+import { AppMain } from "@/components/app-main";
+import { MockPosts } from "@/components/mock-posts";
+import { TelegramMain } from "@/components/telegram-main";
+import { Suspense } from "react";
 
 export default function Home() {
-	return <TelegramMain />;
+	return (
+		<>
+			<TelegramMain />
+			<Suspense fallback={<div>Loading...</div>}>
+				<MockPosts />
+			</Suspense>
+		</>
+	);
 }
