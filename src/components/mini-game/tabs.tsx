@@ -1,6 +1,6 @@
 "use client";
 
-import { MINI_GAME_TABS } from "@/lib/tabs";
+import { MINI_GAME_TABS } from "@/lib/constants/tabs";
 import { setMiniGameTab, useTabStore } from "@/store/TabStore";
 import { Crown, Heart } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger } from "../ui/tabs";

@@ -1,4 +1,4 @@
-import { MINI_GAME_TABS } from "@/lib/tabs";
+import { MINI_GAME_TABS } from "@/lib/constants/tabs";
 import { create } from "zustand";
 
 type State = {

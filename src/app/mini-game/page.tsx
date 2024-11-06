@@ -4,7 +4,7 @@ import ResultModal from "@/components/mini-game/result-modal";
 import TabLeaderBoard from "@/components/mini-game/tab-leader-board";
 import TabVote from "@/components/mini-game/tab-vote";
 import TabsMiniGame from "@/components/mini-game/tabs";
-import { MINI_GAME_TABS } from "@/lib/tabs";
+import { MINI_GAME_TABS } from "@/lib/constants/tabs";
 import { cn } from "@/lib/utils";
 import { users } from "@/mock-data/data-users";
 import { useTabStore } from "@/store/TabStore";
