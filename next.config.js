@@ -1,4 +1,11 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+
+const domains = ["localhost", "lumiere-a.akamaihd.net"];
+
+const nextConfig = {
+  images: {
+    domains: domains,
+  },
+};
 
 module.exports = nextConfig;
