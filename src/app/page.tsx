@@ -21,7 +21,7 @@ const Start = () => {
   const router = useRouter();
   const { toast } = useToast();
   const handleEnterGame = () => {
-    const telegramId = "1632256542"; // telegramUser?.id?.toString() ?? "";
+    const telegramId = telegramUser?.id?.toString() ?? "";
     if (!telegramId) {
       toast({
         title: "Error",
