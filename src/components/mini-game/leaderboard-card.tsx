@@ -1,28 +1,26 @@
-import Image from "next/image";
+import { Candidate } from "@/types/model-types";
 import React from "react";
 
 type Props = {
-  userName: string;
-  point: number;
-  avatar: string;
+  candidate: Candidate;
   top: number;
 };
 
-const LeaderBoardCard: React.FC<Props> = ({ userName, point, avatar, top }) => {
+const LeaderBoardCard: React.FC<Props> = ({ candidate, top }) => {
   return (
     <div className="rounded-xl bg-[#CBFF70] px-5 py-2 flex items-center gap-3">
       <span className="text-sm font-bold">{top + 1}</span>
-      <Image
-        src={avatar}
+      <img
+        src={candidate.profilePhotoUrl}
         alt="avatar"
         width={120}
         height={120}
         className="rounded-full w-8 h-8 object-cover"
       />
       <div className="flex items-center gap-2 text-black text-sm grow">
-        {userName}
+        {candidate.name}
         <p className="font-bold">|</p>
-        <p className="font-bold">{point}pts</p>
+        <p className="font-bold">{candidate.voteCount}pts</p>
       </div>
     </div>
   );

@@ -1,3 +1,4 @@
+import { useAuthStore } from "@/store/AuthStore";
 import Axios, { InternalAxiosRequestConfig } from "axios";
 import { configure } from "axios-hooks";
 import { LRUCache } from "lru-cache";
@@ -14,10 +15,16 @@ const axiosOptions = {
 const cache = new LRUCache({ max: 10 });
 
 export const fwbAxios = Axios.create(axiosOptions);
+export const axios = Axios.create(axiosOptions);
 
 // request interceptor to add token to request headers
 fwbAxios.interceptors.request.use(
   async (config: InternalAxiosRequestConfig) => {
+    const token = useAuthStore.getState().token;
+    console.log("token", token);
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
     return config;
   },
   (error) => Promise.reject(error)
