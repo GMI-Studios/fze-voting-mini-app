@@ -1,79 +1,71 @@
-"use client";
 import { cn } from "@/lib/utils";
-import { Check } from "lucide-react";
-import Image from "next/image";
+import { Candidate } from "@/types/model-types";
+import { VoteButton, VotedBadge } from "./vote-button";
 
-type Props = {
-  avatar: string;
-  userName: string;
-  userHandle: string;
-  isVoted?: boolean;
-  showVote?: boolean;
-};
+const VoteCard: React.FC<{
+  candidate: Candidate;
+  isLoading: boolean;
+  isVoted: boolean;
+  isCandidateVoted: boolean;
+  onVoted: () => void;
+}> = ({ candidate, isLoading, isVoted, isCandidateVoted, onVoted }) => {
+  const profilePhotoUrl = candidate.profilePhotoUrl;
+  const name = candidate.name;
+  const socialLinks = Object.entries(candidate.socialLinks || {})
+    .filter(([_, value]) => value)
+    .map(([key, value]) => ({
+      icon: key,
+      url: value,
+    }));
 
-const VoteCard: React.FC<Props> = ({
-  avatar,
-  userName,
-  userHandle,
-  isVoted,
-  showVote,
-}) => {
   return (
     <div
       className={cn(
-        "shadow-[0px_0px_4px_0px_#0000001A] rounded-2xl flex items-center justify-between p-2.5 w-full ",
-        isVoted ? "bg-[#121212]" : showVote ? "bg-[#CBFF70]" : "bg-[#DFDFDF]"
+        "shadow-[0px_0px_4px_0px_#0000001A] rounded-2xl flex items-center gap-2 p-2.5 w-full ",
+        isCandidateVoted
+          ? "bg-[#121212]"
+          : !isVoted
+          ? "bg-[#CBFF70]"
+          : "bg-[#DFDFDF]"
       )}
     >
-      <div className="flex items-center gap-2">
-        <Image
-          className="rounded-2xl w-[75px] h-[75px] object-cover"
-          src={avatar}
-          alt="avatar"
-          width={75}
-          height={75}
-        />
+      <img
+        className="rounded-2xl w-[75px] h-[75px] object-cover flex-shrink-0"
+        src={profilePhotoUrl}
+        alt="avatar"
+        width={75}
+        height={75}
+      />
 
-        <div
-          className={cn(
-            "flex flex-col gap-1",
-            isVoted ? "text-[#CBFF70]" : "text-black"
-          )}
-        >
-          <p className="text-xl ">{userName}</p>
-          <p className="text-base flex items-center gap-1">
-            <Image
-              src={`/icons/${
-                isVoted ? "twitter-fill-yellow.svg" : "twitter-fill-black.svg"
-              }`}
-              alt="twitter-fill-black"
-              width={18}
-              height={18}
-            />
-            @{userHandle}
-          </p>
-        </div>
+      <div
+        className={cn(
+          "flex flex-col gap-1 flex-grow",
+          isCandidateVoted ? "text-[#CBFF70]" : "text-black"
+        )}
+      >
+        <p className="text-xl">{name}</p>
+        <p className="text-base flex items-center gap-1">
+          {socialLinks.map(({ icon, url }) => (
+            <>
+              <img
+                key={icon}
+                src={`/icons/${
+                  isVoted ? "twitter-fill-yellow.svg" : "twitter-fill-black.svg"
+                }`}
+                alt="twitter-fill-black"
+                width={18}
+                height={18}
+              />
+              @{url}
+            </>
+          ))}
+        </p>
       </div>
-      {isVoted ? (
-        <div className="flex items-center gap-2 bg-black text-[#CBFF70] text-base rounded-[10px] px-2.5 py-3">
-          <div className="w-5 h-5 rounded-full bg-[#CBFF70] flex items-center justify-center">
-            <Check strokeWidth={3} stroke="black" size={14} />
-          </div>
-          Voted
-        </div>
-      ) : (
-        showVote && (
-          <button className="flex items-center gap-2 bg-black text-white rounded-[10px] px-2.5 py-3 text-base">
-            <Image
-              src="/icons/heart-red.svg"
-              alt="heart-red"
-              width={21}
-              height={18}
-            />
-            Vote
-          </button>
-        )
+      {isLoading && (
+        <div className="w-16 h-16 border-4 border-[#CBFF70] border-t-transparent rounded-full animate-spin"></div>
       )}
+      {!isVoted && <VoteButton onPressed={onVoted} />}
+      {isVoted && isCandidateVoted && <VotedBadge />}
     </div>
   );
 };

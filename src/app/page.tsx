@@ -1,6 +1,9 @@
 "use client";
 
+import { useAuth, useSignIn } from "@/hooks/use-auth";
+import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
+import { useTelegramUser } from "@/telegram/use-telegram-user";
 import { Anton } from "next/font/google";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -8,9 +11,29 @@ import { useRouter } from "next/navigation";
 const anton = Anton({ weight: "400", subsets: ["latin"] });
 
 const Start = () => {
+  const { isAuthenticated } = useAuth();
+  const signInMut = useSignIn({
+    onSignedIn: () => {
+      router.push("/mini-game");
+    },
+  });
+  const { user: telegramUser } = useTelegramUser();
   const router = useRouter();
+  const { toast } = useToast();
   const handleEnterGame = () => {
-    router.push("/mini-game");
+    const telegramId = "1632256542"; // telegramUser?.id?.toString() ?? "";
+    if (!telegramId) {
+      toast({
+        title: "Error",
+        description: "Failed to verify your telegram account",
+      });
+      return;
+    }
+    if (!isAuthenticated) {
+      signInMut.mutate(telegramId);
+    } else {
+      router.push("/mini-game");
+    }
   };
 
   return (
